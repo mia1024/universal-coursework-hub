@@ -27,7 +27,7 @@ let config = {
                     {
                         loader: "sass-loader",
                         options: {
-                            implementation: require("node-sass"),
+                            implementation: require("sass"),
                         },
                     }
                 ],
@@ -40,6 +40,7 @@ let config = {
     },
     entry: {
         popup: path.resolve(__dirname, 'src/popup.ts'),
+        configPage: path.resolve(__dirname, 'src/configPage.ts'),
         background: path.resolve(__dirname, 'src/background.ts'),
         content: path.resolve(__dirname, 'src/contentScript.ts'),
     },
@@ -58,7 +59,8 @@ let config = {
         }),
         new CopyPlugin({
             patterns: [
-                {from: "src/index.html", to: path.resolve(__dirname, "dist", "index.html")},
+                {from: "src/html/popup.html", to: path.resolve(__dirname, "dist", "popup.html")},
+                {from: "src/html/configPage.html", to: path.resolve(__dirname, "dist", "configPage.html")},
                 {from: "assets/icon16.png", to: path.resolve(__dirname, "dist", "icon16.png")},
                 {from: "assets/icon32.png", to: path.resolve(__dirname, "dist", "icon32.png")},
                 {from: "assets/icon48.png", to: path.resolve(__dirname, "dist", "icon48.png")},

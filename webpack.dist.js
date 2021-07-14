@@ -25,7 +25,7 @@ module.exports = merge(common, {
     plugins: [
         new CopyPlugin({
                 patterns: [
-                    {from: "src/distManifest.json", to: path.resolve(__dirname, "dist", "manifest.json")}
+                    {from: "src/manifest/distManifest.json", to: path.resolve(__dirname, "dist", "manifest.json")}
                 ]
             }
         ),

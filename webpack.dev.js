@@ -14,7 +14,8 @@ module.exports = merge(common, {
     plugins: [
         new CopyPlugin({
                 patterns: [
-                    {from: "src/devManifest.json", to: path.resolve(__dirname, "dist", "manifest.json")}
+                    {from: "src/manifest/devManifest.json", to: path.resolve(__dirname, "dist", "manifest.json")},
+                    {from: "src/hot-reload.js", to: path.resolve(__dirname, "dist", "hot-reload.js")}
                 ]
             }
         ),
