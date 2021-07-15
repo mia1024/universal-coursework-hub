@@ -7,13 +7,18 @@
     "removeComments": true,
     "esModuleInterop": true,
     "noImplicitAny": true,
+    "noImplicitThis": true,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "sourceRoot": "src",
     "baseUrl": "src",
+    "rootDir": "src",
     "jsx": "preserve",
     "useDefineForClassFields": true,
-    "experimentalDecorators": true
+    "experimentalDecorators": true,
+    "paths": {
+      "src/*": ["src/*"],
+    }
   },
-  "include": ["src/*"]
+  "include": ["src/*","src/types/*","src/components/*"],
 }

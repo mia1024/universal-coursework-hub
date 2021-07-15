@@ -65,11 +65,15 @@ let config = {
                 {from: "assets/icon32.png", to: path.resolve(__dirname, "dist", "icon32.png")},
                 {from: "assets/icon48.png", to: path.resolve(__dirname, "dist", "icon48.png")},
                 {from: "assets/icon128.png", to: path.resolve(__dirname, "dist", "icon128.png")},
-                {from: "assets/icon256.png", to: path.resolve(__dirname, "dist", "icon256.png")}
+                {from: "assets/icon256.png", to: path.resolve(__dirname, "dist", "icon256.png")},
+                {from: "assets/quicksand.ttf", to: path.resolve(__dirname, "dist", "quicksand.ttf")},
             ]
         }),
         new VueLoaderPlugin()
-    ]
+    ],
+    stats:{
+        errorDetails: true
+    }
 };
 
 module.exports = config

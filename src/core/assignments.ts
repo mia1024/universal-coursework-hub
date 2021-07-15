@@ -1,6 +1,8 @@
-import {Course} from "./courses";
+import type {Course,PartialAssignment,Assignment} from "./types";
 import $ from "jquery";
-import {DOM, makeRequest} from "./utils";
+import {DOM, makeRequestToGradescope} from "./utils";
+
+
 
 const MONTHS = {
     'jan': 0,
@@ -17,16 +19,6 @@ const MONTHS = {
     'dec': 11
 } as { [k: string]: number }
 
-export type Assignment = {
-    course: Course;
-    name: string;
-    deadline?: Date;
-    lateDeadline?: Date;
-    submitted: boolean;
-    grade?: string;
-    action?: string;
-}
-
 function parseDate(d: string, year: number): Date | undefined {
     let match = d.match(/(?<month>jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\w* +(?<day>\d{1,2}) +at +(?<hour>\d{1,2}):(?<minute>\d{1,2})(?<ampm>am|pm)/i);
     if (match == null) return;
@@ -37,9 +29,9 @@ function parseDate(d: string, year: number): Date | undefined {
     return new Date(year, month, parseInt(day, 10), convertedHour, parseInt(minute, 0));
 }
 
-function parseRow(row: HTMLElement, year: number) {
+function parseRow(row: HTMLElement, year: number):PartialAssignment {
     let name = $("th", row).text();
-    let action = $("th>a", row).attr('href');
+    let href = $("th>a", row).attr('href');
     let dueDate = $('.submissionTimeChart--dueDate', row)
     let deadline = dueDate.length >= 1 ? parseDate(dueDate.first().text().toLowerCase(), year) : undefined;
     let lateDueDate = dueDate.nextAll('.submissionTimeChart--dueDate');
@@ -58,12 +50,12 @@ function parseRow(row: HTMLElement, year: number) {
         lateDeadline,
         grade,
         submitted,
-        action,
+        href,
     }
 }
 
 export async function getAssignments(course: Course): Promise<Assignment[]> {
-    let dom = await makeRequest(course.link);
+    let dom = await makeRequestToGradescope(course.link);
     let result: Assignment[] = [];
     let rows = dom.find("tbody tr[role=row]");
     for (let row of rows) {

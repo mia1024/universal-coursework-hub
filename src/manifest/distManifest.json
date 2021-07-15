@@ -2,7 +2,7 @@
   "manifest_version": 2,
   "name": "Grade",
   "description": "Organizes your data from Gradescope into one place in a more sensible way",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "permissions": [
     "https://www.gradescope.com/"
   ],
