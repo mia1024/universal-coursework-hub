@@ -1,5 +1,5 @@
 <template>
-<div>Gradebook placeholder</div>
+    <div>Gradebook placeholder</div>
 </template>
 
 <script lang="ts">

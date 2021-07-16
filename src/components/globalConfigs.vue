@@ -1,5 +1,5 @@
 <template>
-<div>Global config placeholder</div>
+    <div>Global config placeholder</div>
 </template>
 
 <script lang="ts">

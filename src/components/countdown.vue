@@ -18,7 +18,7 @@ export default class Countdown extends Vue.with(Props) {
     beforeCreate() {
         this.secondsLeft = Math.floor((this.countdownTo.getTime() - new Date().getTime()) / 1000)
         setTimeout(_ => this.secondsLeft = Math.floor((this.countdownTo.getTime() - new Date().getTime()) / 1000),
-            1000 - (this.countdownTo.getTime() - new Date().getTime()) % 1000) // calibrate to second mark
+                1000 - (this.countdownTo.getTime() - new Date().getTime()) % 1000) // calibrate to second mark
     }
 
 

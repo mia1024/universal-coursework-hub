@@ -1,12 +1,12 @@
 <template>
-  <div>
-      <CourseCard
-          v-for="course in $store.state.courses"
-          :course="course"
-          :key="course.link"
-          class="course-card"
-      />
-  </div>
+    <div>
+        <CourseCard
+                v-for="course in $store.state.courses"
+                :course="course"
+                :key="course.link"
+                class="course-card"
+        />
+    </div>
 </template>
 
 <script lang="ts">
@@ -22,8 +22,8 @@ export default class CourseConfig extends Vue {
 <style scoped lang="scss">
 
 .course-card {
-  width: 100%;
-  margin-bottom: 1.5em;
+    width: 100%;
+    margin-bottom: 1.5em;
 }
 
 </style>
