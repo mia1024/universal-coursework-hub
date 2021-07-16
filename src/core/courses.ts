@@ -1,8 +1,8 @@
 import $ from "jquery";
 import {DOM, makeRequestToGradescope} from "./utils";
-import type {Course, CourseNotificationConfig} from "./types";
+import type {Course} from "./types";
 
-function getDefaultNotificationConfig(): CourseNotificationConfig {
+function getDefaultNotificationConfig() {
     return {
         overrideDefault: false,
         assignmentGraded: true,
@@ -24,21 +24,22 @@ function parseCourses(dom: DOM): Course[] {
     let courses: Course[] = []
     let isFirstBox = true;
     for (let term of courseList.find("h2")) {
-        let year = parseInt(term.innerText.match(/\d{4}/)[0], 10);
+        let year = parseInt(term.innerText.match(/\d{4}/)![0], 10);
         let courseBoxes = $(term).next('div.courseList--coursesForTerm');
         for (let course of courseBoxes.find('a.courseBox')) {
             let box = $(course);
             let name = box.find('h3.courseBox--shortname').text();
-            let desc = box.find('h4.courseBox--name').text();
-            let link = box.attr('href');
+            let description = box.find('h4.courseBox--name').text();
+            let link = box.attr('href')!;
             courses.push({
+                configs: undefined,
                 name,
                 year,
-                desc,
+                description,
                 link,
-                active: isFirstBox,
-                notifications:getDefaultNotificationConfig()
-            } as Course)
+                isActive: isFirstBox,
+                overrideGlobalConfigs: false
+            })
         }
         isFirstBox = false;
     }

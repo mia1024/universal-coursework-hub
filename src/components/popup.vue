@@ -1,9 +1,11 @@
 <template>
+  <div>
+    <el-card> Countdown:
+      <Countdown :countdown-to="new Date()"></Countdown>
+    </el-card>
 
-    <el-card>    Countdown:
-        <Countdown :countdown-to="new Date()"></Countdown></el-card>
-
-    <a :href="configPageURL" target="_blank">Open Config</a>
+    <a href="overviewPage.html" target="_blank">Open Config</a>
+  </div>
 </template>
 
 <script lang="ts">
@@ -13,7 +15,7 @@ import Countdown from "./countdown.vue"
 
 @Options({components: {Countdown}})
 export default class Popup extends Vue {
-  configPageURL=chrome.runtime.getURL("/configPage.html")
+  // configPageURL=chrome.runtime.getURL("/configPage.html")
 }
 </script>
 

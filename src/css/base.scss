@@ -3,6 +3,8 @@
 body{
     background: $color-background;
     font-family: Quicksand, sans-serif;
+    overflow-y: hidden;
+    margin:0;
 }
 
 a {

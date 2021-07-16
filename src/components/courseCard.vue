@@ -5,7 +5,7 @@
         <span>
         <el-tooltip effect="dark" placement="top" :auto-close="1500" :disabled="editCourseName">
           <template #content>
-            {{ course.desc }}
+            {{ course.description }}
           </template>
           <span :contenteditable="editCourseName"
                 ref="courseNameSpan" id="course-name-span"
@@ -75,7 +75,7 @@ import {Course} from "core"
 import {ElMessage} from "element-plus"
 
 export default class CourseCard extends Vue {
-  @Prop() course: Course
+  @Prop() course!: Course
 
   courseActive: boolean
   globalOverride: boolean
@@ -89,11 +89,11 @@ export default class CourseCard extends Vue {
 
   data() {
     return {
-      courseActive: this.course.active,
-      globalOverride: this.course.notifications.overrideDefault,
-      notificationOnCreate: this.course.notifications.assignmentCreated,
-      notificationOnChange: this.course.notifications.assignmentChanged,
-      notificationOnGrade: this.course.notifications.assignmentGraded,
+      courseActive: this.course.isActive,
+      globalOverride: false,
+      notificationOnCreate: false,
+      notificationOnChange: false,
+      notificationOnGrade: false,
     }
   }
 
@@ -111,8 +111,8 @@ export default class CourseCard extends Vue {
     let range = document.createRange();
     range.setStart(span.childNodes[0], span.innerText.length)
     range.setEnd(span.childNodes[0], span.innerText.length)
-    sel.removeAllRanges()
-    sel.addRange(range)
+    sel!.removeAllRanges()
+    sel!.addRange(range)
     span.focus()
     // this.$refs.courseNameSpan.focus();
   }
@@ -121,17 +121,17 @@ export default class CourseCard extends Vue {
     this.editCourseName = false
     let span = this.$refs.courseNameSpan as HTMLSpanElement
     let sel = window.getSelection();
-    sel.removeAllRanges()
+    sel!.removeAllRanges()
     span.blur()
 
-    let newCourseName=span.innerText.trim()
+    let newCourseName = span.innerText.trim()
 
-    if (!newCourseName){
-      span.innerText=this.course.name;
+    if (!newCourseName) {
+      span.innerText = this.course.name;
       return;
     }
 
-    if ( newCourseName === this.course.name)
+    if (newCourseName === this.course.name)
       return // nothing changed
 
 
@@ -181,7 +181,7 @@ export default class CourseCard extends Vue {
   margin-bottom: 0.5em;
 }
 
-[contenteditable=true]{
+[contenteditable=true] {
   outline: $color-highlight 2px solid;
   outline-offset: 5px;
 

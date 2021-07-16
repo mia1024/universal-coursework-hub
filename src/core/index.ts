@@ -4,6 +4,6 @@ export {getCourses} from "./courses";
 export type {
     Assignment,
     Course,
-    CourseNotificationConfig,
-    DefaultNotificationConfig
+    GlobalConfigurations,
+    CourseConfigurations,
 } from "./types"

@@ -40,16 +40,20 @@ let config = {
     },
     entry: {
         popup: path.resolve(__dirname, 'src/popup.ts'),
-        configPage: path.resolve(__dirname, 'src/configPage.ts'),
+        overviewPage: path.resolve(__dirname, 'src/overviewPage.ts'),
         background: path.resolve(__dirname, 'src/background.ts'),
         content: path.resolve(__dirname, 'src/contentScript.ts'),
     },
     output: {
+        // assetModuleFilename: '[name][ext]',
         filename: '[name].js',
         path: path.resolve(__dirname, "dist"),
     },
     resolve: {
         extensions: ['.ts', '.vue', '.js'],
+        alias:{
+            "vue":"vue/dist/vue.esm-bundler.js"
+        }
     },
     // devtool: 'cheap-module-source-map',
     plugins: [
@@ -60,7 +64,7 @@ let config = {
         new CopyPlugin({
             patterns: [
                 {from: "src/html/popup.html", to: path.resolve(__dirname, "dist", "popup.html")},
-                {from: "src/html/configPage.html", to: path.resolve(__dirname, "dist", "configPage.html")},
+                {from: "src/html/overviewPage.html", to: path.resolve(__dirname, "dist", "overviewPage.html")},
                 {from: "assets/icon16.png", to: path.resolve(__dirname, "dist", "icon16.png")},
                 {from: "assets/icon32.png", to: path.resolve(__dirname, "dist", "icon32.png")},
                 {from: "assets/icon48.png", to: path.resolve(__dirname, "dist", "icon48.png")},

@@ -6,8 +6,8 @@
     "module": "esnext",
     "removeComments": true,
     "esModuleInterop": true,
-    "noImplicitAny": true,
-    "noImplicitThis": true,
+    "strict": true,
+    "strictPropertyInitialization": false,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
     "sourceRoot": "src",
@@ -16,6 +16,7 @@
     "jsx": "preserve",
     "useDefineForClassFields": true,
     "experimentalDecorators": true,
+    "extendedDiagnostics": true,
     "paths": {
       "src/*": ["src/*"],
     }

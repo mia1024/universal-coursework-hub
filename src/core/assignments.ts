@@ -1,7 +1,6 @@
-import type {Course,PartialAssignment,Assignment} from "./types";
+import type {Course, PartialAssignment, Assignment} from "./types";
 import $ from "jquery";
 import {DOM, makeRequestToGradescope} from "./utils";
-
 
 
 const MONTHS = {
@@ -21,7 +20,7 @@ const MONTHS = {
 
 function parseDate(d: string, year: number): Date | undefined {
     let match = d.match(/(?<month>jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)\w* +(?<day>\d{1,2}) +at +(?<hour>\d{1,2}):(?<minute>\d{1,2})(?<ampm>am|pm)/i);
-    if (match == null) return;
+    if (match == null || match.groups == null) return;
     let month = MONTHS[match.groups.month];
     let {day, hour, minute, ampm} = match.groups;
     let convertedHour = parseInt(hour, 10);
@@ -29,14 +28,14 @@ function parseDate(d: string, year: number): Date | undefined {
     return new Date(year, month, parseInt(day, 10), convertedHour, parseInt(minute, 0));
 }
 
-function parseRow(row: HTMLElement, year: number):PartialAssignment {
+function parseRow(row: HTMLElement, year: number): PartialAssignment {
     let name = $("th", row).text();
     let href = $("th>a", row).attr('href');
     let dueDate = $('.submissionTimeChart--dueDate', row)
     let deadline = dueDate.length >= 1 ? parseDate(dueDate.first().text().toLowerCase(), year) : undefined;
     let lateDueDate = dueDate.nextAll('.submissionTimeChart--dueDate');
     let lateDeadline = lateDueDate.length == 1 ? parseDate(lateDueDate.text().toLowerCase(), year) : undefined;
-    let grade = $('td.submissionStatus>div.submissionStatus--score', row).text();
+    let grade: string | undefined = $('td.submissionStatus>div.submissionStatus--score', row).text();
     let submitted: boolean;
     if (grade) {
         submitted = true;
