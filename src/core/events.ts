@@ -1,4 +1,4 @@
-class BaseEvent {
+export class BaseEvent {
     name: string
     data: any
 

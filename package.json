@@ -8,7 +8,9 @@
   "scripts": {
     "build": "webpack build --progress -c webpack.dist.js",
     "dev": "webpack --watch --progress -c webpack.dev.js",
-    "serve": "OUTSIDE_EXTENSION=1 webpack serve --progress -c webpack.dev.js "
+    "serve": "OUTSIDE_EXTENSION=1 webpack serve --progress -c webpack.dev.js ",
+    "test": "mochapack --reporter nyan --require tests/setup.js --webpack-config webpack.test.js tests/*.spec.ts",
+    "test:watch": "yarn test --watch"
   },
   "repository": {
     "type": "git",
@@ -20,17 +22,26 @@
   "homepage": "https://github.com/mia1024/grade-browser-extension#readme",
   "devDependencies": {
     "@types/chrome": "^0.0.145",
+    "@types/expect": "^24.3.0",
     "@types/jquery": "^3.5.5",
+    "@types/mocha": "^8.2.3",
     "@types/strftime": "^0.9.2",
     "@vue/compiler-sfc": "^3.1.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^9.0.0",
     "css-loader": "^5.1.0",
+    "dexie": "^3.0.3",
     "element-plus": "^1.0.2-beta.53",
+    "expect": "^27.0.6",
     "extract-loader": "^5.1.0",
+    "fake-indexeddb": "^3.1.3",
     "foundation-sites": "^6.6.3",
     "html-loader": "^2.1.2",
     "jquery": "^3.5.1",
+    "jsdom": "^16.6.0",
+    "jsdom-global": "^3.0.2",
+    "mocha": "8",
+    "mochapack": "^2.1.2",
     "node-sass": "^6.0.0",
     "normalize.css": "^8.0.1",
     "sass": "^1.32.8",
@@ -49,7 +60,7 @@
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3",
-    "zip-webpack-plugin": "^4.0.1",
-    "dexie": "^3.0.3"
+    "webpack-node-externals": "^3.0.0",
+    "zip-webpack-plugin": "^4.0.1"
   }
 }

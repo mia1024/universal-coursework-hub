@@ -12,7 +12,7 @@
     "allowSyntheticDefaultImports": true,
     "sourceRoot": "src",
     "baseUrl": "src",
-    "rootDir": "src",
+//    "rootDir": "src",
     "jsx": "preserve",
     "useDefineForClassFields": true,
     "experimentalDecorators": true,
