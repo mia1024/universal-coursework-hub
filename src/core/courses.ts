@@ -1,15 +1,6 @@
 import $ from "jquery";
-import {DOM, makeRequestToGradescope} from "./utils";
+import {DOM, makeRequestToGradescope, toIDBBoolean} from "./utils";
 import type {Course} from "./types";
-
-function getDefaultNotificationConfig() {
-    return {
-        overrideDefault: false,
-        assignmentGraded: true,
-        assignmentCreated: true,
-        assignmentChanged: true
-    }
-}
 
 function parseCourses(dom: DOM): Course[] {
     if (!dom.find('title').text().includes(" | ")) {
@@ -36,9 +27,10 @@ function parseCourses(dom: DOM): Course[] {
                 name,
                 year,
                 description,
-                link,
-                isActive: isFirstBox,
-                overrideGlobalConfigs: false
+                id: link.substring(9), // the number at the end of /courses/0123456
+                isActive: toIDBBoolean(isFirstBox),
+                overrideGlobalConfigs: false,
+                assignments: []
             })
         }
         isFirstBox = false;

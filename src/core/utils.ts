@@ -1,4 +1,5 @@
 import $ from "jquery";
+import {IDBBoolean} from "./types";
 
 export async function makeRequestToGradescope(endpoint: string) {
     let response = await fetch("https://www.gradescope.com"+endpoint,{
@@ -25,3 +26,8 @@ export async function makeRequestToGradescope(endpoint: string) {
 
 export type Awaited<T> = T extends PromiseLike<infer U> ? Awaited<U> : T;
 export type DOM = Awaited<ReturnType<typeof makeRequestToGradescope>>
+
+export function toIDBBoolean(b:boolean):IDBBoolean{
+    return Number(b) as IDBBoolean
+}
+// from IDBBoolean is just the normal boolean constructor

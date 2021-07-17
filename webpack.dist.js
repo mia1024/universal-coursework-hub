@@ -34,6 +34,9 @@ module.exports = merge(common, {
         }),
         new CleanWebpackPlugin({}),
         new DeleteEverythingButZip(),
+        new webpack.DefinePlugin({
+            "IN_EXTENSION": true
+        })
     ],
     devtool: 'cheap-module-source-map',
 })

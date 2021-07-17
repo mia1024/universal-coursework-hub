@@ -4,6 +4,6 @@ export {getCourses} from "./courses";
 export type {
     Assignment,
     Course,
-    GlobalConfigurations,
-    CourseConfigurations,
+    GlobalConfigs,
+    CourseConfigs,
 } from "./types"

@@ -7,6 +7,7 @@ import CourseConfigs from "./components/courseConfigs.vue";
 import Popup from "./components/popup.vue";
 import GlobalConfigs from "./components/globalConfigs.vue"
 import Gradebook from "./components/Gradebook.vue";
+import Logs from "./components/logs.vue";
 
 let router = VueRouter.createRouter({
     history: VueRouter.createWebHashHistory(),
@@ -30,20 +31,28 @@ let router = VueRouter.createRouter({
                     component: CourseConfigs
                 },
                 {
-                    path:"/globalSettings",
-                    name:"globalSettings",
+                    path: "/globalSettings",
+                    name: "globalSettings",
                     component: GlobalConfigs
                 },
                 {
-                    path:"/gradebook",
-                    name:"gradebook",
+                    path: "/gradebook",
+                    name: "gradebook",
                     component: Gradebook
+                },
+                {
+                    path: "/logs",
+                    name: "logs",
+                    component: Logs
                 }
             ]
         },
         {path: '/:noMatch(.*)*', name: 'NotFound', component: OverviewPage},
     ]
 })
+declare var IN_EXTENSION: boolean
+
+console.log("ext", IN_EXTENSION)
 
 let app = init(defineComponent({
     template: `<router-view/>`

@@ -23,7 +23,7 @@
              style="margin-left: 2ch"
              @click="endEditCourseName()"></i>
           </span>
-                <a :href="'https://www.gradescope.com/'+course.link" target="_blank">View on Gradescope</a>
+                <a :href="'https://www.gradescope.com/courses/'+course.id" target="_blank">View on Gradescope</a>
             </div>
         </template>
 
@@ -136,7 +136,7 @@ export default class CourseCard extends Vue {
 
 
         this.$store.commit("updateCourse", {
-            link: this.course.link,
+            id: this.course.id,
             update: {
                 name: newCourseName
             }

@@ -23,8 +23,8 @@ export const store = createStore<State>({
         addCourse(state: State, course: Course) {
             state.courses.push(course)
         },
-        updateCourse(state: State, data: { link: string, update: Partial<Course> }) {
-            let c = state.courses.find(c => c.link === data.link)
+        updateCourse(state: State, data: { id: string, update: Partial<Course> }) {
+            let c = state.courses.find(c => c.id === data.id)
             console.log(c)
             Object.assign(c, data.update) // TODO this is clearly not working
         },

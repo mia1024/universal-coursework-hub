@@ -8,16 +8,16 @@
   "scripts": {
     "build": "webpack build --progress -c webpack.dist.js",
     "dev": "webpack --watch --progress -c webpack.dev.js",
-    "serve": "webpack serve --progress -c webpack.dev.js"
+    "serve": "OUTSIDE_EXTENSION=1 webpack serve --progress -c webpack.dev.js "
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/mia1024/grade.git"
   },
   "bugs": {
-    "url": "https://github.com/mia1024/grade/issues"
+    "url": "https://github.com/mia1024/grade-browser-extension/issues"
   },
-  "homepage": "https://github.com/mia1024/grade#readme",
+  "homepage": "https://github.com/mia1024/grade-browser-extension#readme",
   "devDependencies": {
     "@types/chrome": "^0.0.145",
     "@types/jquery": "^3.5.5",
@@ -49,9 +49,7 @@
     "webpack-cli": "^4.5.0",
     "webpack-dev-server": "^3.11.2",
     "webpack-merge": "^5.7.3",
-    "zip-webpack-plugin": "^4.0.1"
-  },
-  "dependencies": {
+    "zip-webpack-plugin": "^4.0.1",
     "dexie": "^3.0.3"
   }
 }

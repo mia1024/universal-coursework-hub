@@ -6,6 +6,7 @@ import './css/base.scss'
 import 'element-plus/packages/theme-chalk/src/index.scss'
 import 'element-plus/packages/theme-chalk/src/display.scss'
 
+
 // Due to the nature of the project (two entries) this is necessary
 export function init(rootComponent: Component) {
     let app = createApp(rootComponent)

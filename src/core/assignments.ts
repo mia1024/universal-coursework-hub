@@ -1,6 +1,6 @@
-import type {Course, PartialAssignment, Assignment} from "./types";
+import type {Course, Assignment, IDBBoolean} from "./types";
 import $ from "jquery";
-import {DOM, makeRequestToGradescope} from "./utils";
+import {DOM, makeRequestToGradescope, toIDBBoolean} from "./utils";
 
 
 const MONTHS = {
@@ -28,7 +28,7 @@ function parseDate(d: string, year: number): Date | undefined {
     return new Date(year, month, parseInt(day, 10), convertedHour, parseInt(minute, 0));
 }
 
-function parseRow(row: HTMLElement, year: number): PartialAssignment {
+function parseRow(row: HTMLElement, year: number, courseId: string): Assignment {
     let name = $("th", row).text();
     let href = $("th>a", row).attr('href');
     let dueDate = $('.submissionTimeChart--dueDate', row)
@@ -48,18 +48,19 @@ function parseRow(row: HTMLElement, year: number): PartialAssignment {
         deadline,
         lateDeadline,
         grade,
-        submitted,
+        submitted: toIDBBoolean(submitted),
         href,
+        courseId,
+        manualEntry: toIDBBoolean(false)
     }
 }
 
 export async function getAssignments(course: Course): Promise<Assignment[]> {
-    let dom = await makeRequestToGradescope(course.link);
+    let dom = await makeRequestToGradescope('/courses/' + course.id);
     let result: Assignment[] = [];
     let rows = dom.find("tbody tr[role=row]");
     for (let row of rows) {
-        let parsed = parseRow(row, course.year);
-        result.push({...parsed, course})
+        result.push(parseRow(row, course.year, course.id))
     }
     return result
 }

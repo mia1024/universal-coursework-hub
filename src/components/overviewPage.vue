@@ -91,7 +91,8 @@ export default class OverviewPage extends Vue {
         {name: "dashboard", label: "Dashboard"},
         {name: "globalSettings", label: "Global Settings"},
         {name: "courseSettings", label: "Course Settings"},
-        {name: "gradebook", label: "Gradebook"}
+        {name: "logs", label: "Logs"},
+        {name: "gradebook", label: "Gradebook"},
     ]
 
     selectedTab: string = "";
