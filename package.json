@@ -9,8 +9,8 @@
     "build": "webpack build --progress -c webpack.dist.js",
     "dev": "webpack --watch --progress -c webpack.dev.js",
     "serve": "OUTSIDE_EXTENSION=1 webpack serve --progress -c webpack.dev.js ",
-    "test": "mochapack --reporter nyan --require tests/setup.js --webpack-config webpack.test.js tests/*.spec.ts",
-    "test:watch": "yarn test --watch"
+    "test": "mochapack --require tests/setup.js --webpack-config webpack.test.js tests/*.spec.ts --reporter nyan",
+    "test:watch": "mochapack --require tests/setup.js --webpack-config webpack.test.js tests/*.spec.ts --watch"
   },
   "repository": {
     "type": "git",

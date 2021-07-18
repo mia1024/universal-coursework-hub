@@ -13,6 +13,16 @@ module.exports = merge(common, {
             "IN_EXTENSION": false
         })
     ],
+    output: {
+        // devtoolModuleFilenameTemplate: '[resource-path]',
+        devtoolModuleFilenameTemplate(info){
+            return "/home"+info.resourcePath.substring(8)
+        },
+        devtoolFallbackModuleFilenameTemplate(info){
+            return "/home"+info.resourcePath.substring(8)+"?"+info.hash
+        },
+    },
     target: 'node', // webpack should emit node.js compatible code
     externals: [nodeExternals()], // in order to ignore all modules in node_modules folder from bundling
+    devtool:"inline-cheap-module-source-map",
 })
