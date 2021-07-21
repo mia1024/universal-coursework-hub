@@ -10,9 +10,16 @@ interface Event<Data>{
 interface EventType<Data>{
     new(data:Data):Event<Data>
     listeners: Set<EventListener<Data>>
-    addListener(listener:EventListener<Data>):void
+    container: EventContainer
+    addListener(listener:EventListener<Data>): EventType<Data>
+    removeListener(listener:EventListener<Data>): EventType<Data>
     type: string
 }
 
-export type {EventListener, Event, EventType}
+interface EventContainer{
+    createEvent<Data>(type: string, errorIfExists?: boolean):EventType<Data>
+    getEvent<Data=any>(type:string):EventType<Data>|undefined
+}
+
+export type {EventListener, Event, EventType, EventContainer}
 

@@ -24,6 +24,17 @@ describe("core/events.ts", () => {
         let e = new Event("test data")
         expect(e.type).toBe("test.event.create")
         expect(e.data).toBe("test data")
+
+        let EE = getEvent("test.event")
+        expect(EE).toBeDefined()
+        expect(EE!.name).toBe("TestEventEvent")
+        expect(EE!.type).toBe("test.event")
+
+        let ET = getEvent("test")
+        expect(ET).toBeDefined()
+        expect(ET!.name).toBe("TestEvent")
+        expect(ET!.type).toBe("test")
+
     })
 
     it("handles event namespaces correctly", () => {
@@ -70,10 +81,15 @@ describe("core/events.ts", () => {
 
         expect(E.listeners).toBeDefined()
         expect(E.listeners.size).toBe(0)
-        E.addListener(listener)
+
+        expect(E.addListener(listener)).toBe(E)
         expect(E.listeners.size).toBe(1)
         let e = new E("Data")
         expect(e.listeners.has(listener)).toBeTruthy()
+        expect(() => E.addListener(listener)).toThrowError()
+
+        expect(E.removeListener(listener)).toBe(E)
+        expect(() => E.removeListener(listener)).toThrowError()
     })
 
 
@@ -98,6 +114,12 @@ describe("core/events.ts", () => {
         E2.addListener(f2)
         expect(E1.listeners.size).toBe(1)
         expect(E2.listeners.size).toBe(2)
+    })
+
+    it("creates containers correctly", () => {
+        let c = createContainer(null)
+        let E = c.createEvent("event")
+        expect(E.container).toBe(c)
     })
 
     it("isolates containers correctly", () => {
@@ -129,7 +151,7 @@ describe("core/events.ts", () => {
 
 
     it("validates event names correctly", () => {
-        let {createEvent} = createContainer(null)
+        let {createEvent, getEvent} = createContainer(null)
         for (let name of [
             "",
             "13.24",
@@ -153,7 +175,9 @@ describe("core/events.ts", () => {
         expect(createEvent("ab cd.ef gh")).toBeDefined()
         expect(createEvent("ab.cd.smile😃")).toBeDefined()
 
-
+        expect(createEvent("ab.cd.ef")).toBeDefined()
+        expect(getEvent("ab.cd")).toBeDefined()
+        expect(() => createEvent('ab.cd', true)).toThrowError()
     })
 
     it("validates container names correctly", () => {
@@ -170,5 +194,82 @@ describe("core/events.ts", () => {
         expect(() => createContainer("O.O")).toThrowError()
     })
 
+    it("emits events correctly", () => {
+        let {createEvent} = createContainer(null)
+        let E1 = createEvent<void>("event.emit.test1")
+        let E2 = createEvent<number>("event.emit.test2")
+
+        let count = 0
+
+        E1.addListener(() => {
+            count++
+        })
+
+        E2.addListener((e) => {
+            count += e.data
+        })
+
+        let e1 = new E1()
+        e1.emit()
+        expect(count).toEqual(1)
+        let e2 = new E2(5)
+        expect(count).toEqual(1)
+        e2.emit()
+        expect(count).toEqual(6)
+
+        E2.addListener((e) => {
+            count -= e.data
+        })
+        e1.emit()
+        expect(count).toEqual(7)
+        e2.emit()
+        expect(count).toEqual(7)
+        E2.addListener((e) => {
+            let e1 = new E1()
+            e1.emit()
+        })
+        e2.emit()
+        expect(count).toEqual(8)
+    })
+
+    it("emits recursive events correctly", () => {
+        let {createEvent, getEvent} = createContainer(null)
+        let EEmit = createEvent<void>("test.event.recursive.emit")
+        let ERecursive = getEvent<void>("test.event.recursive")
+        let EEvent = getEvent<void>("test.event")
+        let ETest = getEvent<void>("test")
+
+        expect(EEmit).toBeDefined()
+        expect(ERecursive).toBeDefined()
+        expect(EEvent).toBeDefined()
+        expect(ETest).toBeDefined()
+
+        ERecursive = ERecursive as EventType<void>
+        EEvent = EEvent as EventType<void>
+        ETest = ETest as EventType<void>
+        let count = 0
+
+        function listener() {
+            count++
+        }
+
+        EEmit.addListener(listener)
+        ERecursive.addListener(listener)
+        EEvent.addListener(listener)
+        ETest.addListener(listener)
+
+        new EEmit().emit()
+        expect(count).toEqual(4)
+
+        new ERecursive().emit()
+        expect(count).toEqual(7)
+
+        new EEvent().emit()
+        expect(count).toEqual(9)
+
+        new ETest().emit()
+        expect(count).toEqual(10)
+
+    })
 
 })

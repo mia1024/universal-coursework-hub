@@ -1,4 +1,4 @@
-import type {Event, EventType} from "./types";
+import type {Event, EventType, EventContainer} from "./types";
 
 const EVENT_NAMESPACE_ROOT_EVENT_NAME = "__root__" // cannot be set through createEvent
 
@@ -30,7 +30,7 @@ const createdContainers = new Set<string>()
  * @return {getEvent,createEvent} - a getEvent function and createEvent function
  * functionally equivalent to the normal versions but isolated.
  */
-function createContainer(containerName: string | null) {
+function createContainer(containerName: string | null): EventContainer {
 
     if (containerName !== null) {
         if (createdContainers.has(containerName)) {
@@ -57,6 +57,7 @@ function createContainer(containerName: string | null) {
 
         // implemented in createEvent through Object.defineProperty
         static listeners: Set<BaseEventListener<any>>
+        declare static type: string
 
         private static registeredTypes: EventNamespace = new Map();
 
@@ -74,14 +75,25 @@ function createContainer(containerName: string | null) {
         }
 
         static addListener<Data>(listener: BaseEventListener<Data>) {
+            if (this.listeners.has(listener)) {
+                throw Error("The listener to add is already registered for " + this.type)
+            }
             this.listeners.add(listener)
+            return this as unknown as EventType<Data>
+        }
+
+        static removeListener<Data>(listener: BaseEventListener<Data>) {
+            if (!this.listeners.delete(listener)) {
+                throw Error("The listener to remove was not found on " + this.type)
+            }
+            return this as unknown as EventType<Data>
         }
 
         static createEventNamespaces(stems: Array<string>, namespace: EventNamespace, created: string): EventNamespace {
             if (stems.length == 0) return namespace
 
             let name = stems.shift() as string
-            let currentName = created + "." + name
+            let currentName = created ? created + "." + name : name
 
             let ns = namespace.get(name)
             if (ns === undefined) {
@@ -118,11 +130,9 @@ function createContainer(containerName: string | null) {
                 let nsOrEvent = ns.get(name)
                 if (nsOrEvent === undefined) return undefined
                 if (nsOrEvent instanceof Map) {
-                    if (stems) {
-                        ns = nsOrEvent
-                    } else {
+                    ns = nsOrEvent
+                    if (stems.length === 0)
                         return ns.get(EVENT_NAMESPACE_ROOT_EVENT_NAME) as EventType<any>
-                    }
                 } else if (stems.length == 0) {
                     return nsOrEvent
                 } else {
@@ -136,7 +146,7 @@ function createContainer(containerName: string | null) {
             let errors: any[] = []
             let type: EventType<any> = this.constructor as EventType<any>
             let parents = type.type.substring(0, type.type.lastIndexOf("."))
-            do {
+            while (true) {
                 type.listeners.forEach(l => {
                         try {
                             l(this)
@@ -155,13 +165,14 @@ function createContainer(containerName: string | null) {
                 if (tmp === undefined) return
                 type = tmp
                 parents = type.type.substring(0, type.type.lastIndexOf("."))
-            } while (parents)
+            }
         }
     }
 
     function createEventUnchecked<Data>(type: string): EventType<Data> {
         class E extends BaseEvent<Data> {
             declare static type: string // assigned using Object.defineProperty below()
+            declare static container: EventContainer
         }
 
         Object.defineProperty(E, "type", {value: type, writable: false})
@@ -170,6 +181,7 @@ function createContainer(containerName: string | null) {
             writable: false
         })
         Object.defineProperty(E, "listeners", {value: new Set(), writable: false})
+        Object.defineProperty(E, "container", {value: container, writable: false})
         return E
     }
 
@@ -194,21 +206,22 @@ function createContainer(containerName: string | null) {
     }
 
 
-    function getEvent(type: string): EventType<any> | undefined {
+    function getEvent<Data = any>(type: string): EventType<Data> | undefined {
         if (!type.match(/^[a-zA-Z]/)) {
             return undefined
         }
-        return BaseEvent.getRegisteredType(type)
+        return BaseEvent.getRegisteredType(type) as EventType<Data>
     }
 
 
-    return {createEvent, getEvent}
+    const container = {createEvent, getEvent}
+    return container
 }
 
 const {createEvent, getEvent} = createContainer("global")
 
-function createSimpleEvent(type: string): EventType<void> {
-    return createEvent<void>(type)
+function createSimpleEvent(type: string, errorIfExists: boolean = true): EventType<void> {
+    return createEvent<void>(type, errorIfExists)
 }
 
 export {createContainer, createEvent, createSimpleEvent, getEvent}
