@@ -8,7 +8,7 @@ import type {
     GlobalState
 } from "./types";
 
-export class GradeStorage extends Dexie {
+export class Universaltorage extends Dexie {
     courseConfigs: Dexie.Table<CourseConfigs, string> // primary key course ID
     globalConfigs: Dexie.Table<GlobalConfigs, number>  // there is a single object in this table, primary key will be 0
     globalStates: Dexie.Table<GlobalState, number> // there is a single object in this table, primary key will be 0
@@ -17,7 +17,7 @@ export class GradeStorage extends Dexie {
     assignmentDeltas: Dexie.Table<AssignmentDelta, number> // auto-incremented primary key
 
     constructor() {
-        super("GradeDatabase");
+        super("UCHDatabase");
         this.version(1).stores({
             courseConfigs: "courseId",
             globalConfigs: "",

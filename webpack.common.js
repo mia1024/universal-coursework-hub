@@ -52,7 +52,9 @@ let config = {
     resolve: {
         extensions: ['.ts', '.vue', '.js'],
         alias:{
-            "vue":"vue/dist/vue.esm-bundler.js"
+            "vue":"vue/dist/vue.esm-bundler.js",
+            "core":path.resolve(__dirname, 'src/core'),
+            "components":path.resolve(__dirname, 'src/components')
         }
     },
     // devtool: 'cheap-module-source-map',

@@ -1,4 +1,4 @@
 import {init} from "./entryCommon";
-import Popup from "./components/popup.vue";
+import {Popup} from "./components";
 
 init(Popup).mount("#root")

@@ -29,6 +29,7 @@
     "@vue/compiler-sfc": "^3.1.2",
     "clean-webpack-plugin": "^4.0.0-alpha.0",
     "copy-webpack-plugin": "^9.0.0",
+    "cross-context-events": "^0.1.0",
     "css-loader": "^5.1.0",
     "dexie": "^3.0.3",
     "element-plus": "^1.0.2-beta.53",

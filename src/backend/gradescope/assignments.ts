@@ -1,6 +1,7 @@
-import type {Course, Assignment, IDBBoolean} from "./types";
+import {Course, Assignment, toIDBBoolean} from "core";
+
 import $ from "jquery";
-import {DOM, makeRequestToGradescope, toIDBBoolean} from "./utils";
+import {DOM, makeRequestToGradescope} from "./utils";
 
 
 const MONTHS = {

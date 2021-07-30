@@ -10,16 +10,13 @@
     "strictPropertyInitialization": false,
     "moduleResolution": "node",
     "allowSyntheticDefaultImports": true,
-    "sourceRoot": "src",
-    "baseUrl": "src",
-//    "rootDir": "src",
+    "sourceRoot": "./src",
+    "baseUrl": "./src",
+    "rootDir": "./src",
     "jsx": "preserve",
     "useDefineForClassFields": true,
     "experimentalDecorators": true,
     "extendedDiagnostics": true,
-    "paths": {
-      "src/*": ["src/*"],
-    }
   },
-  "include": ["src/*","src/types/*","src/components/*"],
+  "include": ["src/**/*"],
 }

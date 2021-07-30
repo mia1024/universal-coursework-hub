@@ -1,6 +1,7 @@
 import $ from "jquery";
-import {DOM, makeRequestToGradescope, toIDBBoolean} from "./utils";
-import type {Course} from "./types";
+import {DOM, makeRequestToGradescope} from "./utils";
+import type {Course} from "core/types";
+import {toIDBBoolean} from "core/utils";
 
 function parseCourses(dom: DOM): Course[] {
     if (!dom.find('title').text().includes(" | ")) {

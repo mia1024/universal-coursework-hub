@@ -2,12 +2,14 @@ import {init} from "./entryCommon";
 import * as VueRouter from "vue-router"
 import {defineComponent} from "vue";
 
-import OverviewPage from "./components/overviewPage.vue";
-import CourseConfigs from "./components/courseConfigs.vue";
-import Popup from "./components/popup.vue";
-import GlobalConfigs from "./components/globalConfigs.vue"
-import Gradebook from "./components/Gradebook.vue";
-import Logs from "./components/logs.vue";
+import {
+    OverviewPage,
+    CourseConfig,
+    Popup,
+    GlobalConfigs,
+    Gradebook,
+    Logs
+} from "components"
 
 let router = VueRouter.createRouter({
     history: VueRouter.createWebHashHistory(),
@@ -28,7 +30,7 @@ let router = VueRouter.createRouter({
                 {
                     path: "/courseSettings",
                     name: "courseSettings",
-                    component: CourseConfigs
+                    component: CourseConfig
                 },
                 {
                     path: "/globalSettings",

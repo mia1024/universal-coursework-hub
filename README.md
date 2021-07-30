@@ -1,14 +1,17 @@
-# Grade: Browser Extension Module
+# Universal Coursework Hub
 
-This repository is a part of the [grade project](https://github.com/mia1024/grade). This module is currently written for, and tested on, Google Chrome and other Chromium-compatible browsers (Vivaldi, Edge, etc.). However, an effort has been made to make it compatible with Firefox as well, although untested. To compile the extension from source, run
+<div style="margin:auto;text-align: center">
+    <img src="icon256.png" alt="icon"/>
+</div>
 
-```sh
-git clone git@github.com:mia1024/grade-browser-extension.git
-cd grade-browser-extension
-npm i # if you have yarn installed, you probably want to run yarn install instead
-npm run build
-```
+A lightweight, easily extensible browser extension that provides many missing
+features of commonly used assignment websites.
 
-You can then find the compiled plugin at `dist/grade.zip`. To install it, navigate to `chrome://extensions/`
-using a Chromium-based browser, toggle on the developer mode at top-right corner, and drag-and-drop the zip file 
-into the page. 
+## Status of this project
+
+Currently, only Gradescope is supported as a backend for this extension because
+this is what I have access to. If you would like to provide support for a different
+backend (e.g. Google Classroom, Canvas, etc.) please [contact me](https://miaceleste.net/contact).
+It should be fairly straightforward to develop and hook into the existing framework, as
+all you need to do is to implement the `Backend` interface (mostly `getCourses()`
+and `getAssignments()`) and UCH will handle everything else. 

@@ -1831,6 +1831,11 @@ core-util-is@1.0.2, core-util-is@~1.0.0:
   resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
   integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
 
+cross-context-events@^0.1.0:
+  version "0.1.0"
+  resolved "https://registry.yarnpkg.com/cross-context-events/-/cross-context-events-0.1.0.tgz#7d266122df6364df5de965985e4fa166022949f1"
+  integrity sha512-WdBzag0pdc3EcAdufuOGsU1XCtB+Q+M1lfuizI/tcbHAWwdJ4KUq2sPNpXOQgLxsyHP2ZdILpsDf7llzitVjLw==
+
 cross-spawn@^6.0.0:
   version "6.0.5"
   resolved "https://registry.yarnpkg.com/cross-spawn/-/cross-spawn-6.0.5.tgz#4a5ec7c64dfae22c3a14124dbacdee846d80cbc4"
